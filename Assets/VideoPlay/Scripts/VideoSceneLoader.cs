@@ -1,13 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.Video;
 
 public class VideoSceneLoader : MonoBehaviour
 {
     private VideoPlayer _videoPlayer;
-
-    [FormerlySerializedAs("Next scene name")] [SerializeField] private string _nextSceneName;
+    [FormerlySerializedAs("UI Manager")] [SerializeField] private UIManager _uiManager;
 
     void Awake () 
     {
@@ -18,6 +16,7 @@ public class VideoSceneLoader : MonoBehaviour
     void OnMovieFinished(VideoPlayer player)
     {
         player.Stop();
-        SceneManager.LoadScene(_nextSceneName);
+        
+        _uiManager.PressedNext();
     }
 }

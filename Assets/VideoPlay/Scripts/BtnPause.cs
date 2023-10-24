@@ -6,21 +6,43 @@ using UnityEngine.Video;
 public class BtnPause : Selectable, IPointerClickHandler
 {
     public VideoPlayer tVideoPlayer;
-    public UIManager test;
+
+    [SerializeField]
+    private Sprite spritePause;
+
+    [SerializeField]
+    private Sprite spritePlay;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Image imgBtn = GetComponent<Image>();
+        imgBtn.sprite = spritePause;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Test Click");
+        if (tVideoPlayer.isPaused) PlayVideo();
+        else PauseVideo();
         
-        if (tVideoPlayer.isPaused)
-        {
-            tVideoPlayer.Play();
-            test.HideUI();
-        }
-        else
-        {
-            tVideoPlayer.Pause();
-            test.ShowUI();
-        }
+        var parent = transform.parent.gameObject;
+        parent.GetComponent<UIManager>().ShowUI();
+    }
+
+    private void PlayVideo()
+    {
+        tVideoPlayer.Play();
+        
+        Image imgBtn = GetComponent<Image>();
+        imgBtn.sprite = spritePause;
+    }
+
+    private void PauseVideo()
+    {
+        tVideoPlayer.Pause();
+        
+        Image imgBtn = GetComponent<Image>();
+        imgBtn.sprite = spritePlay;
     }
 }
